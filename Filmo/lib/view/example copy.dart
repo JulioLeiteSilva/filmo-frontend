@@ -1,3 +1,5 @@
+import 'package:filmo/mixins/validations_mixin.dart';
+import 'package:filmo/view/components/basic_btn_component.dart';
 import 'package:filmo/view/components/text_input_component.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +23,7 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with ValidationsMixin {
   int _counter = 0;
   final _testController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -86,14 +88,24 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TextInputComponent(
-                      controller: _testController,
-                      hintText: 'Teste',
-                      prefixIcon: IconButton(
-                        onPressed: _incrementCounter,
-                        icon: Icon(CupertinoIcons.add),
+                    Center(
+                      child: TextInputComponent(
+                        controller: _testController,
+                        hintText: 'Teste',
+                        validation: (val) => combine(
+                            [() => isNotEmpty(val), () => validateEmail(val)]),
+                        prefixIcon: IconButton(
+                          onPressed: _incrementCounter,
+                          icon: Icon(CupertinoIcons.add),
+                        ),
                       ),
                     ),
+                    Center(
+                      child: BasicBtnComponent(
+                          btnText: "TESTE",
+                          onTap: _incrementCounter,
+                          fontSize: 24),
+                    )
                   ],
                 ))
           ],

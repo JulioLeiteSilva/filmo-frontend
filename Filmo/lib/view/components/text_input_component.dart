@@ -11,6 +11,7 @@ class TextInputComponent extends StatelessWidget with ValidationsMixin {
   final String hintText;
   final Widget? prefixIcon;
   final Widget? sufixIcon;
+  final String? Function(String?) validation;
 
   const TextInputComponent({
     super.key,
@@ -22,6 +23,7 @@ class TextInputComponent extends StatelessWidget with ValidationsMixin {
     this.prefixIcon,
     this.sufixIcon,
     this.maxLength = 20,
+    required this.validation,
   });
 
   @override
@@ -33,7 +35,7 @@ class TextInputComponent extends StatelessWidget with ValidationsMixin {
       height: height * 0.101,
       child: TextFormField(
         controller: controller,
-        validator: isNotEmpty,
+        validator: validation,
         keyboardType: keyboardType,
         obscureText: isObscureText!,
         obscuringCharacter: obscureCharacter!,
