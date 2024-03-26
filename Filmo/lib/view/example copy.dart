@@ -1,5 +1,6 @@
 import 'package:filmo/mixins/validations_mixin.dart';
 import 'package:filmo/view/components/basic_btn_component.dart';
+import 'package:filmo/view/components/logo_type_component.dart';
 import 'package:filmo/view/components/text_input_component.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -76,13 +77,7 @@ class _MyHomePageState extends State<MyHomePage> with ValidationsMixin {
           // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+            LogoTypeComponent(),
             Form(
                 key: _formKey,
                 child: Column(
@@ -105,17 +100,12 @@ class _MyHomePageState extends State<MyHomePage> with ValidationsMixin {
                           btnText: "TESTE",
                           onTap: _incrementCounter,
                           fontSize: 24),
-                    )
+                    ),
                   ],
                 ))
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
