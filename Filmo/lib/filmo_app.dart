@@ -1,7 +1,7 @@
 import 'package:filmo/theme/dark_theme.dart';
 import 'package:flutter/material.dart';
 
-import 'view/example copy.dart';
+import 'package:filmo/view/screens/signin.dart';
 
 class FilmoApp extends StatelessWidget {
   const FilmoApp({super.key});
@@ -14,7 +14,7 @@ class FilmoApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: darkTheme,
       darkTheme: darkTheme,
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: SignInScreen(),
     );
   }
 }

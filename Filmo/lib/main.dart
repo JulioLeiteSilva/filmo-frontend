@@ -4,3 +4,5 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(const FilmoApp());
 }
+
+meu fone acabou a bateria, nõa to ouvindo nada 
