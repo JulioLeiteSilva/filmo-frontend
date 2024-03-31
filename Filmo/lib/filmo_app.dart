@@ -1,7 +1,7 @@
 import 'package:filmo/theme/dark_theme.dart';
 import 'package:flutter/material.dart';
 
-import 'package:filmo/view/screens/signin.dart';
+import 'package:filmo/view/screens/sign_in_screen.dart';
 
 class FilmoApp extends StatelessWidget {
   const FilmoApp({super.key});
