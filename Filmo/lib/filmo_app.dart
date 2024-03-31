@@ -1,6 +1,6 @@
 import 'package:filmo/theme/dark_theme.dart';
+import 'package:filmo/view/screens/sign_up_screen.dart';
 import 'package:flutter/material.dart';
-
 import 'package:filmo/view/screens/sign_in_screen.dart';
 
 class FilmoApp extends StatelessWidget {
