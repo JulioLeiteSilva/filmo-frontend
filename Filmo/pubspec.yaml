@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.6
   google_fonts: ^6.2.1
   flutter_native_splash: ^2.4.0
+  http: ^1.2.1
 
 dev_dependencies:
   flutter_test:
@@ -59,10 +60,11 @@ flutter_native_splash:
   android_12:
     color: "#000000"
     icon_background_color: "#000000"
-    image: assets/images/logoWBkg.png
+    image: assets/images/logoSplash.png
 
 flutter_icons:
   android: true
+  adaptive_icon_background: "#000000"
   ios: true
   image_path: "assets/images/logo.png"
 # The following section is specific to Flutter packages.

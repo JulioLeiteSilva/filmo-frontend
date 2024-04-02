@@ -1,7 +1,12 @@
+import 'package:filmo/data/http/http_client.dart';
+import 'package:filmo/data/models/login_model.dart';
+import 'package:filmo/data/models/sign_up_model.dart';
+import 'package:filmo/data/repositories/user_repository.dart';
 import 'package:filmo/mixins/validations_mixin.dart';
 import 'package:filmo/view/components/basic_btn_component.dart';
 import 'package:filmo/view/components/logo_type_component.dart';
 import 'package:filmo/view/components/text_input_component.dart';
+import 'package:filmo/view/stores/user_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -16,12 +21,33 @@ class _SignInScreenState extends State<SignInScreen> with ValidationsMixin {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  final UserStore store = UserStore(
+    repository: UserRepository(
+      client: HttpClient(),
+    ),
+  );
+
   bool _isObscureText = true;
 
   @override
   Widget build(BuildContext context) {
-    void entrar() {}
-    void cadastrar() {}
+    void entrar() {
+      LoginModel loginModel = LoginModel(
+          email: "fernandao123.teste@gmail.com", password: "senha123");
+      store.signInUser(loginModel);
+    }
+
+    void cadastrar() {
+      SignUpModel signUpModel = SignUpModel(
+        name: "Teste",
+        username: "TESTANDO",
+        email: "teste@gmail.com",
+        cellphone: "19984539218",
+        password: "julio123",
+      );
+      store.signUpUser(signUpModel);
+    }
 
     void showPassword() {
       setState(() {
