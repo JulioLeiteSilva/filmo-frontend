@@ -4,6 +4,7 @@ import 'package:filmo/view/components/logo_type_component.dart';
 import 'package:filmo/view/components/text_input_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:go_router/go_router.dart';
 
 class SignUpScreen extends StatefulWidget {
   SignUpScreen({super.key});
@@ -123,7 +124,7 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationsMixin {
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: BasicBtnComponent(
-                        btnText: 'VOLTAR', onTap: showPassword),
+                        btnText: 'VOLTAR', onTap: ()=>GoRouter.of(context).push("/signin")),
                   ),
                 ],
               ),

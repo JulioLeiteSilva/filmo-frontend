@@ -9,6 +9,7 @@ import 'package:filmo/view/components/text_input_component.dart';
 import 'package:filmo/view/stores/user_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:go_router/go_router.dart';
 
 class SignInScreen extends StatefulWidget {
   SignInScreen({super.key});
@@ -38,15 +39,16 @@ class _SignInScreenState extends State<SignInScreen> with ValidationsMixin {
       store.signInUser(loginModel);
     }
 
-    void cadastrar() {
-      SignUpModel signUpModel = SignUpModel(
-        name: "Teste",
-        username: "TESTANDO",
-        email: "teste@gmail.com",
-        cellphone: "19984539218",
-        password: "julio123",
-      );
-      store.signUpUser(signUpModel);
+    void goToSignUp() {
+      GoRouter.of(context).push('/signup');
+      // SignUpModel signUpModel = SignUpModel(
+      //   name: "Teste",
+      //   username: "TESTANDO",
+      //   email: "teste@gmail.com",
+      //   cellphone: "19984539218",
+      //   password: "julio123",
+      // );
+      // store.signUpUser(signUpModel);
     }
 
     void showPassword() {
@@ -103,7 +105,7 @@ class _SignInScreenState extends State<SignInScreen> with ValidationsMixin {
                 ),
               ),
               const SizedBox(height: 30.0),
-              BasicBtnComponent(btnText: "CADASTRAR", onTap: cadastrar),
+              BasicBtnComponent(btnText: "CADASTRAR", onTap: goToSignUp),
             ],
           ),
         ),
