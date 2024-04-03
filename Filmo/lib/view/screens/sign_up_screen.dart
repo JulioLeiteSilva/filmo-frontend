@@ -114,6 +114,7 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationsMixin {
                     child: TextInputComponent(
                       controller: _celController,
                       maxLength: 16,
+                      isPhoneNumber: true,
                       hintText: 'CELULAR:',
                       prefixIcon: const Icon(CupertinoIcons.phone),
                       validation: (val) => combine(
