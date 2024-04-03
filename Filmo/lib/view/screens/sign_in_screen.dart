@@ -1,6 +1,5 @@
 import 'package:filmo/data/http/http_client.dart';
 import 'package:filmo/data/models/login_model.dart';
-import 'package:filmo/data/models/sign_up_model.dart';
 import 'package:filmo/data/repositories/user_repository.dart';
 import 'package:filmo/mixins/validations_mixin.dart';
 import 'package:filmo/view/components/basic_btn_component.dart';
@@ -33,22 +32,16 @@ class _SignInScreenState extends State<SignInScreen> with ValidationsMixin {
 
   @override
   Widget build(BuildContext context) {
-    void entrar() {
-      LoginModel loginModel = LoginModel(
-          email: "fernandao123.teste@gmail.com", password: "senha123");
-      store.signInUser(loginModel);
+    void loginUser() {
+      if (_formKey.currentState!.validate()) {
+        LoginModel loginModel = LoginModel(
+            email: "fernandao123.teste@gmail.com", password: "senha123");
+        store.signInUser(loginModel);
+      }
     }
 
     void goToSignUp() {
       GoRouter.of(context).push('/signup');
-      // SignUpModel signUpModel = SignUpModel(
-      //   name: "Teste",
-      //   username: "TESTANDO",
-      //   email: "teste@gmail.com",
-      //   cellphone: "19984539218",
-      //   password: "julio123",
-      // );
-      // store.signUpUser(signUpModel);
     }
 
     void showPassword() {
@@ -82,6 +75,7 @@ class _SignInScreenState extends State<SignInScreen> with ValidationsMixin {
                       validation: (val) => combine(
                         [
                           () => isNotEmpty(val),
+                          () => validateEmail(val),
                         ],
                       ),
                     ),
@@ -97,10 +91,13 @@ class _SignInScreenState extends State<SignInScreen> with ValidationsMixin {
                         onPressed: showPassword,
                       ),
                       isObscureText: _isObscureText,
-                      validation: isNotEmpty,
+                      validation: (val) => combine([
+                        () => isNotEmpty(val),
+                        () => validateTextLength(val, 6)
+                      ]),
                     ),
                     const SizedBox(height: 150.0),
-                    BasicBtnComponent(btnText: "ENTRAR", onTap: entrar),
+                    BasicBtnComponent(btnText: "ENTRAR", onTap: loginUser),
                   ],
                 ),
               ),

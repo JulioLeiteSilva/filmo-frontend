@@ -1,7 +1,11 @@
+import 'package:filmo/data/http/http_client.dart';
+import 'package:filmo/data/models/sign_up_model.dart';
+import 'package:filmo/data/repositories/user_repository.dart';
 import 'package:filmo/mixins/validations_mixin.dart';
 import 'package:filmo/view/components/basic_btn_component.dart';
 import 'package:filmo/view/components/logo_type_component.dart';
 import 'package:filmo/view/components/text_input_component.dart';
+import 'package:filmo/view/stores/user_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
@@ -20,6 +24,13 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationsMixin {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _passwordCheckController = TextEditingController();
+
+  final UserStore store = UserStore(
+    repository: UserRepository(
+      client: HttpClient(),
+    ),
+  );
+
   bool _isObscureText = true;
 
   final _formKey = GlobalKey<FormState>();
@@ -28,9 +39,23 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationsMixin {
   Widget build(BuildContext context) {
     void showPassword() {
       setState(() {
-        if (_passwordController.text.isNotEmpty)
+        if (_passwordController.text.isNotEmpty) {
           _isObscureText = !_isObscureText;
+        }
       });
+    }
+
+    void next() {
+      if (_formKey.currentState!.validate()) {
+        SignUpModel signUpModel = SignUpModel(
+          name: "Teste",
+          username: "TESTANDO",
+          email: "teste@gmail.com",
+          cellphone: "19984539218",
+          password: "julio123",
+        );
+        store.signUpUser(signUpModel);
+      }
     }
 
     return Scaffold(
@@ -50,7 +75,9 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationsMixin {
                     maxLength: 30,
                     hintText: 'NOME:',
                     prefixIcon: const Icon(CupertinoIcons.person_crop_circle),
-                    validation: isNotEmpty,
+                    validation: (val) => combine(
+                      [() => isNotEmpty(val), () => validateTextLength(val, 3)],
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 5),
@@ -59,7 +86,12 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationsMixin {
                       maxLength: 30,
                       hintText: 'NOME DE USUÁRIO:',
                       prefixIcon: const Icon(CupertinoIcons.person_crop_circle),
-                      validation: isNotEmpty,
+                      validation: (val) => combine(
+                        [
+                          () => isNotEmpty(val),
+                          () => validateTextLength(val, 5)
+                        ],
+                      ),
                     ),
                   ),
                   Padding(
@@ -69,7 +101,12 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationsMixin {
                       maxLength: 50,
                       hintText: 'E-MAIL:',
                       prefixIcon: const Icon(CupertinoIcons.mail),
-                      validation: isNotEmpty,
+                      validation: (val) => combine(
+                        [
+                          () => isNotEmpty(val),
+                          () => validateEmail(val),
+                        ],
+                      ),
                     ),
                   ),
                   Padding(
@@ -79,7 +116,12 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationsMixin {
                       maxLength: 16,
                       hintText: 'CELULAR:',
                       prefixIcon: const Icon(CupertinoIcons.phone),
-                      validation: isNotEmpty,
+                      validation: (val) => combine(
+                        [
+                          () => isNotEmpty(val),
+                          () => validateCellphoneNumber(val),
+                        ],
+                      ),
                     ),
                   ),
                   Padding(
@@ -96,7 +138,12 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationsMixin {
                             : CupertinoIcons.eye_fill),
                         onPressed: showPassword,
                       ),
-                      validation: isNotEmpty,
+                      validation: (val) => combine(
+                        [
+                          () => isNotEmpty(val),
+                          () => validateTextLength(val, 6),
+                        ],
+                      ),
                     ),
                   ),
                   Padding(
@@ -113,18 +160,26 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationsMixin {
                             : CupertinoIcons.eye_fill),
                         onPressed: showPassword,
                       ),
-                      validation: isNotEmpty,
+                      validation: (val) => combine(
+                        [
+                          () => isNotEmpty(val),
+                          () => validateConfirmPassword(
+                                _passwordController.value.text,
+                                val,
+                              ),
+                        ],
+                      ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
-                    child: BasicBtnComponent(
-                        btnText: 'CONTINUAR', onTap: showPassword),
+                    child: BasicBtnComponent(btnText: 'CONTINUAR', onTap: next),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: BasicBtnComponent(
-                        btnText: 'VOLTAR', onTap: ()=>GoRouter.of(context).push("/signin")),
+                        btnText: 'VOLTAR',
+                        onTap: () => GoRouter.of(context).push("/signin")),
                   ),
                 ],
               ),
