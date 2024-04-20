@@ -1,8 +1,6 @@
 import 'package:filmo/mixins/validations_mixin.dart';
-import 'package:filmo/view/components/basic_btn_component.dart';
+import 'package:filmo/view/components/tile_btn_component.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
 
 class ProfileScreen extends StatefulWidget {
   ProfileScreen({super.key});
@@ -12,13 +10,12 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> with ValidationsMixin {
+  void goToAvaliations() {}
+  void exit() {}
 
   @override
-    void avaliacoes() {}
-    void sair() {}
-
-    Widget build(BuildContext context) {
-      return Scaffold(
+  Widget build(BuildContext context) {
+    return Scaffold(
       body: SingleChildScrollView(
         child: Center(
           child: Column(
@@ -28,42 +25,25 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationsMixin {
               const SizedBox(height: 50.0),
               const Padding(
                 padding: EdgeInsets.all(25.0),
-               child: CircleAvatar(
-                radius: 70,
-                backgroundImage: AssetImage('assets/images/profile.png'),
-               ),
+                child: CircleAvatar(
+                  radius: 70,
+                  backgroundImage: AssetImage('assets/images/profile.png'),
+                ),
               ),
               const Text(
                 "Sabrina Carpenter",
                 style: TextStyle(
-                  fontSize: 28, 
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 218, 218, 218)),
-               ),
-              SizedBox(height: 55.0),
-              BasicBtnComponent(btnText: "MINHAS AVALIAÇÕES", onTap: avaliacoes),
-              const SizedBox(height: 30.0),
-              BasicBtnComponent(btnText: "SAIR", onTap: sair),
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 218, 218, 218)),
+              ),
+              const SizedBox(height: 55.0),
+              TileBtnComponent(
+                  btnText: "MINHAS AVALIAÇÕES", onTap: goToAvaliations),
+              const SizedBox(height: 10.0),
+              TileBtnComponent(btnText: "SAIR", onTap: exit),
             ],
           ),
-        )
-      ),
-      bottomNavigationBar: Positioned(
-        bottom: 0,
-        left: 0,
-        right: 0,
-        child: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.house_fill),
-              label: 'Home'
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Profile'
-            ),
-          ],
-          selectedItemColor: Color.fromARGB(255, 219, 173, 72),
         ),
       ),
     );
