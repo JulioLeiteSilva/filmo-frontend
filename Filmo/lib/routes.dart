@@ -1,5 +1,5 @@
-import 'package:filmo/test.dart';
-import 'package:filmo/view/screens/home_screen.dart';
+
+import 'package:filmo/view/screens/main_screen.dart';
 import 'package:filmo/view/screens/sign_in_screen.dart';
 import 'package:filmo/view/screens/sign_up_screen.dart';
 import 'package:go_router/go_router.dart';
@@ -9,7 +9,7 @@ final routes = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => const HomeScreen(),
+      builder: (context, state) => MainScreen(),
     ),
     GoRoute(
       path: '/signin',

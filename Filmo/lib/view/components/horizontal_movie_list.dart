@@ -29,16 +29,9 @@ class _HorizontalMovieListState extends State<HorizontalMovieList> {
               widget.listName,
               style: TextStyle(
                 color: Theme.of(context).colorScheme.secondary,
-                fontSize: 14,
+                fontSize: 20,
               ),
             ),
-            SizedBox(
-              width: width * 0.70,
-            ),
-            IconButton(
-              onPressed: test,
-              icon: const Icon(CupertinoIcons.arrow_right),
-            )
           ],
         ),
         Container(

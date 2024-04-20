@@ -1,4 +1,5 @@
 import 'package:filmo/mixins/validations_mixin.dart';
+import 'package:filmo/view/components/horizontal_movie_list.dart';
 import 'package:filmo/view/components/tile_btn_component.dart';
 import 'package:flutter/material.dart';
 
@@ -37,11 +38,13 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationsMixin {
                     fontWeight: FontWeight.bold,
                     color: Color.fromARGB(255, 218, 218, 218)),
               ),
-              const SizedBox(height: 55.0),
+              const SizedBox(height: 40.0),
               TileBtnComponent(
                   btnText: "MINHAS AVALIAÇÕES", onTap: goToAvaliations),
               const SizedBox(height: 10.0),
               TileBtnComponent(btnText: "SAIR", onTap: exit),
+              const SizedBox(height: 30.0),
+              HorizontalMovieList(listName: "MINHA LISTA"),
             ],
           ),
         ),
