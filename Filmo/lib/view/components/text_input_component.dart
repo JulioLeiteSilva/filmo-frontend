@@ -1,6 +1,6 @@
 import 'package:filmo/mixins/validations_mixin.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/services.dart';
 
 class TextInputComponent extends StatelessWidget with ValidationsMixin {
   final TextEditingController controller;
@@ -12,6 +12,7 @@ class TextInputComponent extends StatelessWidget with ValidationsMixin {
   final Widget? prefixIcon;
   final Widget? sufixIcon;
   final String? Function(String?) validation;
+  final bool? isPhoneNumber;
 
   const TextInputComponent({
     super.key,
@@ -24,6 +25,7 @@ class TextInputComponent extends StatelessWidget with ValidationsMixin {
     this.sufixIcon,
     this.maxLength = 20,
     required this.validation,
+    this.isPhoneNumber = false,
   });
 
   @override
@@ -44,6 +46,7 @@ class TextInputComponent extends StatelessWidget with ValidationsMixin {
           fontSize: 14,
         ),
         maxLength: maxLength,
+        inputFormatters: isPhoneNumber! ? [PhoneNumberFormatter()] : null,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.only(top: 12.0),
           constraints: BoxConstraints(
@@ -82,6 +85,39 @@ class TextInputComponent extends StatelessWidget with ValidationsMixin {
           ),
         ),
       ),
+    );
+  }
+}
+
+class PhoneNumberFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    const maxLength = 11; // Defina o comprimento máximo do número de telefone
+
+    // Remove todos os caracteres não numéricos do novo texto
+    final digitsOnly = newValue.text.replaceAll(RegExp(r'\D'), '');
+
+    // Se o número de dígitos for menor que o máximo, mantenha o texto inalterado
+    if (digitsOnly.length < maxLength) {
+      return newValue;
+    }
+
+    final formattedNumber = StringBuffer();
+
+    // Aplica o padrão de formatação específico
+    formattedNumber.write('(');
+    formattedNumber.write(digitsOnly.substring(0, 2));
+    formattedNumber.write(') ');
+    formattedNumber.write(digitsOnly.substring(2, digitsOnly.length > 7 ? 7 : digitsOnly.length));
+    if (digitsOnly.length > 7) {
+      formattedNumber.write('-');
+      formattedNumber.write(digitsOnly.substring(7, digitsOnly.length > 11 ? 11 : digitsOnly.length));
+    }
+
+    return TextEditingValue(
+      text: formattedNumber.toString(),
+      selection: TextSelection.collapsed(offset: formattedNumber.length),
     );
   }
 }
