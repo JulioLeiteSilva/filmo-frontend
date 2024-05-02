@@ -4,7 +4,7 @@ import 'package:filmo/view/components/tile_btn_component.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
-  ProfileScreen({super.key});
+  const ProfileScreen({super.key});
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
@@ -44,7 +44,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationsMixin {
               const SizedBox(height: 10.0),
               TileBtnComponent(btnText: "SAIR", onTap: exit),
               const SizedBox(height: 30.0),
-              HorizontalMovieList(listName: "MINHA LISTA"),
+              const HorizontalMovieList(listName: "MINHA LISTA"),
             ],
           ),
         ),

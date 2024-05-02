@@ -11,7 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
 class SignInScreen extends StatefulWidget {
-  SignInScreen({super.key});
+  const SignInScreen({super.key});
 
   @override
   _SignInScreenState createState() => _SignInScreenState();
@@ -46,8 +46,9 @@ class _SignInScreenState extends State<SignInScreen> with ValidationsMixin {
 
     void showPassword() {
       setState(() {
-        if (_passwordController.text.isNotEmpty)
+        if (_passwordController.text.isNotEmpty) {
           _isObscureText = !_isObscureText;
+        }
       });
     }
 
