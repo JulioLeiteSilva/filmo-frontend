@@ -55,6 +55,7 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationsMixin {
           password: "julio123",
         );
         store.signUpUser(signUpModel);
+        GoRouter.of(context).push("/preferences");
       }
     }
 
