@@ -1,12 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
 
 class SearchTileButton extends StatelessWidget {
   const SearchTileButton({super.key});
 
   @override
   Widget build(BuildContext context) {
+    void goToSearch() {
+      GoRouter.of(context).push('/search');
+    }
+
     return Container(
       color: Colors.black, // Fundo preto
       padding: const EdgeInsets.all(8.0), // Adicionando algum espaço interno
@@ -19,9 +23,10 @@ class SearchTileButton extends StatelessWidget {
             width: 65,
             height: 65,
           ),
-          const Icon(
-            CupertinoIcons.search,
-            size: 40,
+          IconButton(
+            icon: const Icon(CupertinoIcons.search),
+            onPressed: goToSearch,
+            iconSize: 40,
             color: Colors.white, // Cor do ícone
           ),
         ],
