@@ -1,5 +1,5 @@
-
 import 'package:filmo/view/screens/main_screen.dart';
+import 'package:filmo/view/screens/preferences_screen.dart';
 import 'package:filmo/view/screens/search_screen.dart';
 import 'package:filmo/view/screens/sign_in_screen.dart';
 import 'package:filmo/view/screens/sign_up_screen.dart';
@@ -10,7 +10,7 @@ final routes = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => MainScreen(),
+      builder: (context, state) => const MainScreen(),
     ),
     GoRoute(
       path: '/signin',
@@ -23,6 +23,10 @@ final routes = GoRouter(
     GoRoute(
       path: '/search',
       builder: (context, state) => SearchScreen(),
+    ),
+    GoRoute(
+      path: '/preferences',
+      builder: (context, state) => PreferenceScreen(),
     )
   ],
 );
