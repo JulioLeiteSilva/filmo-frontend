@@ -18,6 +18,31 @@ mixin ValidationsMixin {
     return null;
   }
 
+  String? validateTextLength(String? value, int length, [String? message]) {
+    if (value!.length < length) {
+      return message ?? "O número de caracteres é insuficiente";
+    }
+    return null;
+  }
+
+  String? validateCellphoneNumber(String? value, [String? message]) {
+    const pattern = r'^\(\d{2}\) \d{4,5}-\d{4}$';
+    final regex = RegExp(pattern);
+
+    if (!regex.hasMatch(value!)) {
+      return message ?? "Número de telefone inválido";
+    }
+    return null;
+  }
+
+  String? validateConfirmPassword(String? password, String? repeatedPassword,
+      [String? message]) {
+    if (password != repeatedPassword) {
+      return message ?? "As senhas não correspondem";
+    }
+    return null;
+  }
+
   String? combine(List<String? Function()> validators) {
     for (final func in validators) {
       final validation = func();
