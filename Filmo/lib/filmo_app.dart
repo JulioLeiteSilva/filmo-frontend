@@ -1,5 +1,6 @@
 import 'package:filmo/routes.dart';
 import 'package:filmo/theme/dark_theme.dart';
+import 'package:filmo/view/screens/preferences_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

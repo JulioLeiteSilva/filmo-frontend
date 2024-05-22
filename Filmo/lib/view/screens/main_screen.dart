@@ -1,5 +1,6 @@
 import 'package:filmo/view/screens/home_screen.dart';
 import 'package:filmo/view/screens/profile_screen.dart';
+import 'package:filmo/view/screens/search_screen.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {

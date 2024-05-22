@@ -1,6 +1,6 @@
 import 'package:filmo/view/components/tile_movie_componet.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HorizontalMovieList extends StatefulWidget {
   final String listName;
@@ -18,7 +18,9 @@ class _HorizontalMovieListState extends State<HorizontalMovieList> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    void test() {}
+    void test() {
+      GoRouter.of(context).push('/movieDetails');
+    }
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
