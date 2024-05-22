@@ -13,7 +13,7 @@ class HttpClient implements IHttpClient {
   Future get({required String url}) async {
     return await client.get(Uri.parse(url));
   }
-  
+
   @override
   Future post({required String url, required body}) async {
     return await client.post(
@@ -22,7 +22,7 @@ class HttpClient implements IHttpClient {
       headers: {"Content-Type": "application/json"},
     );
   }
-  
+
   @override
   Future put({required String url, required body}) async {
     return await client.put(
