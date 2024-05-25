@@ -14,7 +14,23 @@ final routes = GoRouter(
   refreshListenable: authService,
   redirect: ((context, state) {
     final isAuthenticated = authService.isAuthenticated;
-    final isLoginRoute = state.path == '/login';
+    final isLoginRoute = state.matchedLocation == '/signin';
+    final isSignUpRoute = state.matchedLocation == '/signup';
+    final isPreferencesRoute = state.matchedLocation == '/preferences';
+
+    if (!isAuthenticated) {
+      // Redirecionar para a página de login se não estiver autenticado e não estiver na página de login, cadastro ou preferências
+      if (!isLoginRoute && !isSignUpRoute && !isPreferencesRoute) {
+        return '/signin';
+      }
+    } else {
+      // Redirecionar para a página inicial se já estiver autenticado e tentar acessar a página de login ou cadastro
+      if (isLoginRoute || isSignUpRoute) {
+        return '/';
+      }
+    }
+
+    return null;
   }),
   routes: [
     GoRoute(

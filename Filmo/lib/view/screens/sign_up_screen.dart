@@ -1,4 +1,5 @@
 import 'package:filmo/data/http/http_client.dart';
+import 'package:filmo/data/models/login_model.dart';
 import 'package:filmo/data/models/sign_up_model.dart';
 import 'package:filmo/data/repositories/user_repository.dart';
 import 'package:filmo/mixins/validations_mixin.dart';
@@ -9,6 +10,7 @@ import 'package:filmo/view/stores/user_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -25,18 +27,14 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationsMixin {
   final _passwordController = TextEditingController();
   final _passwordCheckController = TextEditingController();
 
-  final UserStore store = UserStore(
-    repository: UserRepository(
-      client: HttpClient(),
-    ),
-  );
-
   bool _isObscureText = true;
 
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    final userStore = Provider.of<UserStore>(context);
+
     void showPassword() {
       setState(() {
         if (_passwordController.text.isNotEmpty) {
@@ -48,14 +46,25 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationsMixin {
     void next() {
       if (_formKey.currentState!.validate()) {
         SignUpModel signUpModel = SignUpModel(
-          name: "Teste",
-          username: "TESTANDO",
-          email: "teste@gmail.com",
-          cellphone: "19984539218",
-          password: "julio123",
+          name: _nameController.text,
+          username: _userNameController.text,
+          email: _emailController.text,
+          cellphone: _celController.text,
+          password: _passwordController.text,
         );
-        store.signUpUser(signUpModel);
-        GoRouter.of(context).push("/preferences");
+        try {
+          userStore.signUpUser(signUpModel).then((_) {
+            LoginModel loginModel = LoginModel(
+              email: signUpModel.email,
+              password: signUpModel.password,
+            );
+            userStore.signInUser(loginModel).then((_) {
+              GoRouter.of(context).push("/preferences");
+            });
+          });
+        } catch (e) {
+          print(e);
+        }
       }
     }
 

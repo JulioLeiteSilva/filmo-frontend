@@ -1,3 +1,4 @@
+import 'package:filmo/routes.dart';
 import 'package:filmo/view/components/basic_btn_component.dart';
 import 'package:filmo/view/components/option_btn_component.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ class PreferenceScreen extends StatefulWidget {
 
 class _PreferenceScreenState extends State<PreferenceScreen> {
   void goToHome() {
+    authService.login();
     GoRouter.of(context).push('/');
   }
 

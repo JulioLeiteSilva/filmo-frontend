@@ -24,7 +24,8 @@ class UserRepository implements IUserRepository {
     };
 
     final response = await client.post(
-        url: 'http://localhost:8000/api/login', body: jsonEncode(body));
+        //url: 'http://localhost:8000/api/login', body: jsonEncode(body));
+        url: 'http://10.0.2.2:8000/api/login', body: jsonEncode(body));
 
     if (response.statusCode == 200) {
       final UserModel user;
@@ -52,7 +53,8 @@ class UserRepository implements IUserRepository {
     };
 
     final response = await client.post(
-      url: 'http://localhost:8000/api/create',
+      //url: 'http://localhost:8000/api/create',
+      url: 'http://10.0.2.2:8000/api/create',
       body: jsonEncode(body),
     );
 

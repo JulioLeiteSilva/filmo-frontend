@@ -1,6 +1,5 @@
 import 'package:filmo/data/http/http_client.dart';
 import 'package:filmo/data/models/login_model.dart';
-import 'package:filmo/data/repositories/user_repository.dart';
 import 'package:filmo/mixins/validations_mixin.dart';
 import 'package:filmo/view/components/basic_btn_component.dart';
 import 'package:filmo/view/components/logo_type_component.dart';
@@ -9,6 +8,9 @@ import 'package:filmo/view/stores/user_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+
+import '../../routes.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -22,21 +24,18 @@ class _SignInScreenState extends State<SignInScreen> with ValidationsMixin {
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  final UserStore store = UserStore(
-    repository: UserRepository(
-      client: HttpClient(),
-    ),
-  );
-
   bool _isObscureText = true;
 
   @override
   Widget build(BuildContext context) {
+    final userStore = Provider.of<UserStore>(context);
+
     void loginUser() {
       if (_formKey.currentState!.validate()) {
         LoginModel loginModel = LoginModel(
-            email: "fernandao123.teste@gmail.com", password: "senha123");
-        store.signInUser(loginModel);
+            email: _emailController.text, password: _passwordController.text);
+        userStore.signInUser(loginModel);
+        authService.login();
       }
     }
 
@@ -99,6 +98,25 @@ class _SignInScreenState extends State<SignInScreen> with ValidationsMixin {
                     ),
                     const SizedBox(height: 150.0),
                     BasicBtnComponent(btnText: "ENTRAR", onTap: loginUser),
+                    ValueListenableBuilder<bool>(
+                      valueListenable: userStore.isLoading,
+                      builder: (context, isLoading, child) {
+                        if (isLoading) {
+                          return CircularProgressIndicator();
+                        }
+                        return Container();
+                      },
+                    ),
+                    ValueListenableBuilder<String>(
+                      valueListenable: userStore.error,
+                      builder: (context, error, child) {
+                        if (error.isNotEmpty) {
+                          return Text(error,
+                              style: TextStyle(color: Colors.red));
+                        }
+                        return Container();
+                      },
+                    ),
                   ],
                 ),
               ),
