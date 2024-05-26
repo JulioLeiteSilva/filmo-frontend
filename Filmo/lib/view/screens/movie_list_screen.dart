@@ -1,54 +1,60 @@
-import 'package:filmo/view/components/option_btn_component.dart';
-import 'package:filmo/view/screens/home_screen.dart';
-import 'package:filmo/view/screens/profile_screen.dart';
+import 'package:filmo/view/components/tile_movie_componet.dart';
+import 'package:filmo/view/stores/movie_store.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:filmo/data/models/movie_model.dart';
 import 'package:go_router/go_router.dart';
 
 class MovieListScreen extends StatefulWidget {
-  const MovieListScreen({super.key});
+  final String genre;
+
+  const MovieListScreen({super.key, required this.genre});
 
   @override
   _MovieListScreenState createState() => _MovieListScreenState();
 }
 
 class _MovieListScreenState extends State<MovieListScreen> {
-  void goToHome() {
-    GoRouter.of(context).push('/');
+  @override
+  void initState() {
+    super.initState();
+    final movieStore = Provider.of<MovieStore>(context, listen: false);
+    movieStore.loadMoviesFromLocal(widget.genre);
+  }
+
+  void goToMovieDetails(MovieModel movie) {
+    GoRouter.of(context).push('/movieDetails', extra: movie);
   }
 
   @override
   Widget build(BuildContext context) {
+    final movieStore = Provider.of<MovieStore>(context);
+
     return Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-              child: SizedBox(
-            child: GridView.count(
-              primary: false,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              crossAxisCount: 2,
-              children: <Widget>[
-                OptionBtnComponent(
-                    onTap: goToHome,
-                    backgroundImageAsset: 'assets/images/btn_action.png')
-              ],
-            ),
-          ))
-        ],
+      appBar: AppBar(
+        title: Text('Movies - ${widget.genre}'),
       ),
+      body: movieStore.isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : movieStore.error.isNotEmpty
+              ? Center(child: Text('Error: ${movieStore.error}'))
+              : GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                  ),
+                  itemCount:
+                      movieStore.moviesByGenre[widget.genre]?.length ?? 0,
+                  itemBuilder: (context, index) {
+                    final movie =
+                        movieStore.moviesByGenre[widget.genre]![index];
+                    return MovieTile(
+                      onTap: () => goToMovieDetails(movie),
+                      movie: movie,
+                    );
+                  },
+                ),
     );
   }
 }
-
-
-/*
-class ImageGrid extends StatelessWidget {
-  // Simula a obtenção de imagens do banco de dados
-  Future<List<String>> fetchImagesFromDatabase() async {
-    // Aqui você faria a chamada real para o seu banco de dados
-    // Simulando um atraso
-    await Future.delayed(Duration(seconds: 2));
-    return List<String>.generate(20, (index) => 'https://picsum.photos/200?random=$index');
-  }
-*/ 

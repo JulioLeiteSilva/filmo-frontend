@@ -1,26 +1,34 @@
 import 'package:filmo/view/components/avaliation_component.dart';
 import 'package:filmo/view/components/image_movie_component.dart';
-import 'package:filmo/view/components/movie_genre_button.dart';
 import 'package:filmo/view/components/movie_genre_list.dart';
 import 'package:filmo/view/components/movie_overview_text.dart';
 import 'package:filmo/view/components/movie_title_text.dart';
-import 'package:filmo/view/components/text_with_title_component.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:filmo/data/models/movie_model.dart';
+import 'package:provider/provider.dart';
+import 'package:filmo/view/stores/user_store.dart';
 
-class MovieDetailsScreen extends StatefulWidget {
-  const MovieDetailsScreen({super.key});
+class MovieDetailsScreen extends StatelessWidget {
+  final MovieModel movie;
 
-  @override
-  State<MovieDetailsScreen> createState() => _MovieDetailsScreenState();
-}
+  const MovieDetailsScreen({super.key, required this.movie});
 
-class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   @override
   Widget build(BuildContext context) {
-    String movieTitle = "Corinthians Minha Vida";
-    String movieOverviewText =
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat nibh, mollis at fringilla a, volutpat nec ante. Integer sit amet ante lobortis, cursus justo quis, pulvinar dolor. Nullam id sem elit. Suspendisse viverra ipsum massa, vitae aliquet arcu ullamcorper ut. Duis hendrerit, tortor ut tristique congue, nibh velit egestas tortor, ut porttitor nisi justo at orci. Proin pulvinar ante et nisl accumsan pulvinar. Aliquam sit amet sem justo.";
+    final userStore = Provider.of<UserStore>(context);
+    final isMovieInList =
+        userStore.state.value?.myList.any((m) => m.title == movie.title) ??
+            false;
+
+    void addToMyList() async {
+      await userStore
+          .addTitleToMyList(movie); // Adiciona o objeto MovieModel completo
+    }
+
+    Future<void> removeFromMyList() async {
+      await userStore.removeTitleFromMyList(movie);
+    }
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.onSecondaryContainer,
       body: SingleChildScrollView(
@@ -36,20 +44,34 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                     Container(
                       alignment: Alignment.topLeft,
                       child: Padding(
-                          padding: const EdgeInsets.only(
-                            top: 10,
-                          ),
-                          child: IconButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            icon: const Icon(Icons.arrow_back),
-                          )),
+                        padding: const EdgeInsets.only(
+                          top: 10,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: const Icon(Icons.arrow_back),
+                            ),
+                            IconButton(
+                              onPressed: isMovieInList
+                                  ? removeFromMyList
+                                  : addToMyList,
+                              icon: isMovieInList
+                                  ? const Icon(Icons.remove)
+                                  : const Icon(Icons.add),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                    const Center(
-                      child: ImageMovieComponent(
-                          backgroundImageAsset:
-                              "assets/images/bkgImgMovie01.png"),
+                    Center(
+                      child: Image.network(
+                        'https://image.tmdb.org/t/p/w500/${movie.posterPath}', // Assuming you have a posterPath field
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
@@ -57,7 +79,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                         left: 20,
                         right: 20,
                       ),
-                      child: MovieTitleText(text: movieTitle),
+                      child: MovieTitleText(text: movie.title),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
@@ -66,11 +88,11 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                         right: 20,
                       ),
                       child: MovieOverviewText(
-                        text: movieOverviewText,
+                        text: movie.overview,
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(
+                    Padding(
+                      padding: const EdgeInsets.only(
                         top: 50,
                         left: 20,
                         right: 20,
@@ -79,34 +101,10 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                         height: 50,
                         width: 1000, // Defina a altura desejada
                         child: MovieGenreList(
-                          genres: ["Ação", "Aventura", "Drama"],
+                          genreIds: movie.genreIds
+                              .map((id) => id)
+                              .toList(), // Convert genre IDs to strings
                         ),
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 20, left: 20, right: 20),
-                      child: TextWithTitleComponent(
-                        title: "Elenco:",
-                        texts: [
-                          "Teste 1",
-                          "Teste 2",
-                          "Teste 3",
-                          "Teste 4",
-                          "Teste 5",
-                        ],
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 20, left: 20, right: 20),
-                      child: TextWithTitleComponent(
-                        title: "Direção:",
-                        texts: [
-                          "Teste 1",
-                          "Teste 2",
-                          "Teste 3",
-                          "Teste 4",
-                          "Teste 5",
-                        ],
                       ),
                     ),
                     const Padding(

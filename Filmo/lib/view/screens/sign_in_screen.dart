@@ -1,4 +1,3 @@
-import 'package:filmo/data/http/http_client.dart';
 import 'package:filmo/data/models/login_model.dart';
 import 'package:filmo/mixins/validations_mixin.dart';
 import 'package:filmo/view/components/basic_btn_component.dart';
@@ -9,8 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-
-import '../../routes.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -35,7 +32,6 @@ class _SignInScreenState extends State<SignInScreen> with ValidationsMixin {
         LoginModel loginModel = LoginModel(
             email: _emailController.text, password: _passwordController.text);
         userStore.signInUser(loginModel);
-        authService.login();
       }
     }
 

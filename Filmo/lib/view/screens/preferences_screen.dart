@@ -1,10 +1,9 @@
-import 'package:filmo/routes.dart';
 import 'package:filmo/view/components/basic_btn_component.dart';
-import 'package:filmo/view/components/option_btn_component.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:filmo/view/components/option_btn_component.dart';
+import 'package:filmo/view/stores/movie_store.dart';
 
 class PreferenceScreen extends StatefulWidget {
   const PreferenceScreen({super.key});
@@ -14,9 +13,10 @@ class PreferenceScreen extends StatefulWidget {
 }
 
 class _PreferenceScreenState extends State<PreferenceScreen> {
-  void goToHome() {
-    authService.login();
-    GoRouter.of(context).push('/');
+  void goToMovieList(String genre) async {
+    final movieStore = Provider.of<MovieStore>(context, listen: false);
+    await movieStore.fetchMoviesByGenre(genre);
+    GoRouter.of(context).push('/movieList/$genre');
   }
 
   @override
@@ -34,42 +34,51 @@ class _PreferenceScreenState extends State<PreferenceScreen> {
                   crossAxisCount: 2,
                   children: <Widget>[
                     OptionBtnComponent(
-                        onTap: goToHome,
-                        backgroundImageAsset: 'assets/images/btn_action.png'),
+                      onTap: () => goToMovieList('action'),
+                      backgroundImageAsset: 'assets/images/btn_action.png',
+                    ),
                     OptionBtnComponent(
-                        onTap: goToHome,
-                        backgroundImageAsset:
-                            'assets/images/btn_animation.png'),
+                      onTap: () => goToMovieList('animation'),
+                      backgroundImageAsset: 'assets/images/btn_animation.png',
+                    ),
                     OptionBtnComponent(
-                        onTap: goToHome,
-                        backgroundImageAsset: 'assets/images/btn_comedy.png'),
+                      onTap: () => goToMovieList('comedy'),
+                      backgroundImageAsset: 'assets/images/btn_comedy.png',
+                    ),
                     OptionBtnComponent(
-                        onTap: goToHome,
-                        backgroundImageAsset: 'assets/images/btn_crime.png'),
+                      onTap: () => goToMovieList('crime'),
+                      backgroundImageAsset: 'assets/images/btn_crime.png',
+                    ),
                     OptionBtnComponent(
-                        onTap: goToHome,
-                        backgroundImageAsset: 'assets/images/btn_fantasy.png'),
+                      onTap: () => goToMovieList('fantasy'),
+                      backgroundImageAsset: 'assets/images/btn_fantasy.png',
+                    ),
                     OptionBtnComponent(
-                        onTap: goToHome,
-                        backgroundImageAsset: 'assets/images/btn_ficcion.png'),
+                      onTap: () => goToMovieList('science fiction'),
+                      backgroundImageAsset: 'assets/images/btn_ficcion.png',
+                    ),
                     OptionBtnComponent(
-                        onTap: goToHome,
-                        backgroundImageAsset: 'assets/images/btn_horror.png'),
+                      onTap: () => goToMovieList('horror'),
+                      backgroundImageAsset: 'assets/images/btn_horror.png',
+                    ),
                     OptionBtnComponent(
-                        onTap: goToHome,
-                        backgroundImageAsset: 'assets/images/btn_musical.png'),
+                      onTap: () => goToMovieList('musical'),
+                      backgroundImageAsset: 'assets/images/btn_musical.png',
+                    ),
                     OptionBtnComponent(
-                        onTap: goToHome,
-                        backgroundImageAsset: 'assets/images/btn_romance.png'),
+                      onTap: () => goToMovieList('romance'),
+                      backgroundImageAsset: 'assets/images/btn_romance.png',
+                    ),
                     OptionBtnComponent(
-                        onTap: goToHome,
-                        backgroundImageAsset: 'assets/images/btn_suspense.png'),
+                      onTap: () => goToMovieList('suspense'),
+                      backgroundImageAsset: 'assets/images/btn_suspense.png',
+                    ),
                   ],
                 ),
               ),
             ),
           ),
-          BasicBtnComponent(btnText: 'FINALIZAR', onTap: goToHome)
+          BasicBtnComponent(btnText: 'FINALIZAR', onTap: () => GoRouter.of(context).push('/'))
         ],
       ),
     );

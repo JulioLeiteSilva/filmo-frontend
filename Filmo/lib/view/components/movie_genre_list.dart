@@ -13,15 +13,38 @@ class MovieGenre {
 }
 
 class MovieGenreList extends StatelessWidget {
-  final List<String> genres; // Lista de gêneros de filme
+  final List<int> genreIds; // Lista de IDs de gêneros de filme
 
   const MovieGenreList({
-    required this.genres,
+    required this.genreIds,
     Key? key,
   }) : super(key: key);
 
+  // Mapeamento dos IDs de gêneros para os nomes dos gêneros
+  static const Map<int, String> genreMapping = {
+    28: "Ação",
+    12: "Aventura",
+    16: "Animação",
+    35: "Comédia",
+    80: "Crime",
+    99: "Documentário",
+    18: "Drama",
+    10751: "Família",
+    14: "Fantasia",
+    36: "História",
+    27: "Terror",
+    10402: "Música",
+    9648: "Mistério",
+    10749: "Romance",
+    878: "Ficção científica",
+    10770: "Cinema TV",
+    53: "Thriller",
+    10752: "Guerra",
+    37: "Faroeste",
+  };
+
   // Função para atribuir uma cor a cada gênero de filme
-  List<MovieGenre> _assignColorsToGenres(List<String> genres) {
+  List<MovieGenre> _assignColorsToGenres(List<int> genreIds) {
     List<Color> colors = [
       Colors.red,
       Colors.blue,
@@ -33,8 +56,9 @@ class MovieGenreList extends StatelessWidget {
 
     List<MovieGenre> movieGenres = [];
 
-    for (int i = 0; i < genres.length; i++) {
-      movieGenres.add(MovieGenre(name: genres[i], color: colors[i % colors.length]));
+    for (int i = 0; i < genreIds.length; i++) {
+      String genreName = genreMapping[genreIds[i]] ?? "Desconhecido";
+      movieGenres.add(MovieGenre(name: genreName, color: colors[i % colors.length]));
     }
 
     return movieGenres;
@@ -42,7 +66,7 @@ class MovieGenreList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<MovieGenre> movieGenres = _assignColorsToGenres(genres);
+    List<MovieGenre> movieGenres = _assignColorsToGenres(genreIds);
 
     return ListView.builder(
       scrollDirection: Axis.horizontal,
@@ -59,4 +83,3 @@ class MovieGenreList extends StatelessWidget {
     );
   }
 }
-

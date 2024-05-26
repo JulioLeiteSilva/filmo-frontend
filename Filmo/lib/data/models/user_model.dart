@@ -1,11 +1,26 @@
-import 'package:filmo/data/models/movie_model.dart';
+import 'package:hive/hive.dart';
+import 'movie_model.dart';
 
+part 'user_model.g.dart';
+
+@HiveType(typeId: 0)
 class UserModel {
+  @HiveField(0)
   final String name;
+
+  @HiveField(1)
   final String username;
+
+  @HiveField(2)
   final String email;
+
+  @HiveField(3)
   final String cellphone;
+
+  @HiveField(4)
   final String token;
+
+  @HiveField(5)
   final List<MovieModel> myList;
 
   UserModel({
