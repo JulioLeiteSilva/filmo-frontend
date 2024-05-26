@@ -27,7 +27,7 @@ class MovieTile extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
           child: Image.network(
-            'https://image.tmdb.org/t/p/w500/${movie.posterPath}', // Assuming you have a posterPath field
+            'https://image.tmdb.org/t/p/w500/${movie.posterPath}',
             fit: BoxFit.cover,
           ),
         ),

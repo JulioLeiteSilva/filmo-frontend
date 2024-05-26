@@ -14,7 +14,6 @@ class MovieGenreButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        // Ação do botão
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: color,

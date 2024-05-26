@@ -87,6 +87,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.1,
                     ),
+                    if (userStore.state.value != null &&
+                        userStore.state.value!.myList.isNotEmpty)
+                      HorizontalMovieList(
+                        listName: "My List",
+                        movies: userStore.state.value!.myList,
+                      ),
                     Center(
                       child: Container(
                         padding: const EdgeInsets.only(top: 10),

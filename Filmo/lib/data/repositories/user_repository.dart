@@ -63,7 +63,6 @@ class UserRepository implements IUserRepository {
     );
 
     if (response.statusCode == 200) {
-      // Registro bem-sucedido, não há necessidade de retornar nenhum valor
       return;
     } else if (response.statusCode == 404) {
       throw NotFoundException("A URL não foi encontrada");

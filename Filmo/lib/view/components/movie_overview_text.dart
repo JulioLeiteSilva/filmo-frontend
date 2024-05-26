@@ -19,7 +19,7 @@ class MovieOverviewText extends StatelessWidget {
         trim: 4,
         linkTextStyle: TextStyle(
           color: Theme.of(context).colorScheme.primary,
-        ), // Defina o número máximo de linhas antes de mostrar o botão de "Ver mais"
+        ),
         style: TextStyle(
           fontSize: 18,
           color: Theme.of(context).colorScheme.secondary,

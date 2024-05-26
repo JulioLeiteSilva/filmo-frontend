@@ -1,7 +1,6 @@
 import 'package:filmo/view/components/movie_genre_button.dart';
 import 'package:flutter/material.dart';
 
-// Classe de modelo para representar o gênero do filme
 class MovieGenre {
   final String name;
   final Color color;
@@ -13,14 +12,13 @@ class MovieGenre {
 }
 
 class MovieGenreList extends StatelessWidget {
-  final List<int> genreIds; // Lista de IDs de gêneros de filme
+  final List<int> genreIds;
 
   const MovieGenreList({
     required this.genreIds,
     Key? key,
   }) : super(key: key);
 
-  // Mapeamento dos IDs de gêneros para os nomes dos gêneros
   static const Map<int, String> genreMapping = {
     28: "Ação",
     12: "Aventura",
@@ -43,7 +41,6 @@ class MovieGenreList extends StatelessWidget {
     37: "Faroeste",
   };
 
-  // Função para atribuir uma cor a cada gênero de filme
   List<MovieGenre> _assignColorsToGenres(List<int> genreIds) {
     List<Color> colors = [
       Colors.red,

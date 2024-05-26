@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:filmo/view/components/tile_movie_componet.dart'; // Certifique-se de importar corretamente
+import 'package:filmo/view/components/tile_movie_componet.dart';
 import 'package:filmo/data/models/movie_model.dart';
 
 class HorizontalMovieList extends StatefulWidget {
   final String listName;
-  final List<MovieModel> movies; // Adicione uma lista de MovieModel como parâmetro
+  final List<MovieModel> movies;
 
   const HorizontalMovieList({
     super.key,
     required this.listName,
-    required this.movies, // Adicione este parâmetro ao construtor
+    required this.movies,
   });
 
   @override

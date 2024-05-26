@@ -46,6 +46,8 @@ class MovieModel {
   @HiveField(13)
   final int voteCount;
 
+  static const String defaultImagePath = "/1E5baAaEse26fej7uHcjOgEE2t2.jpg";
+
   MovieModel({
     required this.adult,
     required this.backdropPath,
@@ -66,14 +68,14 @@ class MovieModel {
   factory MovieModel.fromMap(Map<dynamic, dynamic> map) {
     return MovieModel(
       adult: map['adult'],
-      backdropPath: map['backdrop_path'],
+      backdropPath: map['backdrop_path'] ?? defaultImagePath,
       genreIds: List<int>.from(map['genre_ids']),
       id: map['id'],
       originalLanguage: map['original_language'],
       originalTitle: map['original_title'],
       overview: map['overview'],
       popularity: map['popularity'].toDouble(),
-      posterPath: map['poster_path'],
+      posterPath: map['poster_path'] ?? defaultImagePath,
       releaseDate: map['release_date'],
       title: map['title'],
       video: map['video'],

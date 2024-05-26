@@ -12,11 +12,11 @@ class SearchTileButton extends StatelessWidget {
     }
 
     return Container(
-      color: Colors.black, // Fundo preto
-      padding: const EdgeInsets.all(8.0), // Adicionando algum espaço interno
+      color: Colors.black,
+      padding: const EdgeInsets.all(8.0),
       child: Row(
         mainAxisAlignment:
-            MainAxisAlignment.spaceBetween, // Alinha os elementos ao redor
+            MainAxisAlignment.spaceBetween,
         children: [
           Image.asset(
             'assets/images/logo.png',
@@ -27,7 +27,7 @@ class SearchTileButton extends StatelessWidget {
             icon: const Icon(CupertinoIcons.search),
             onPressed: goToSearch,
             iconSize: 40,
-            color: Colors.white, // Cor do ícone
+            color: Colors.white,
           ),
         ],
       ),

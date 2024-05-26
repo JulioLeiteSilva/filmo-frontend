@@ -64,7 +64,6 @@ class MovieStore with ChangeNotifier {
 
       final recommendations = await repository.getRecommendations(title, token);
 
-      // Filtrar os filmes pelo primeiro gênero
       Map<String, List<MovieModel>> genreMap = {};
       for (var movie in recommendations) {
         if (movie.genreIds.isNotEmpty) {
@@ -80,7 +79,7 @@ class MovieStore with ChangeNotifier {
       await _saveRecommendationsToLocal(genreMap);
       _error = '';
     } catch (e) {
-      _recommendationsByGenre = {};
+      //_recommendationsByGenre = {};
       _error = e.toString();
     } finally {
       _isLoading = false;

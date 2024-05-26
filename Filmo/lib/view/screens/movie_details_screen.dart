@@ -22,7 +22,7 @@ class MovieDetailsScreen extends StatelessWidget {
 
     void addToMyList() async {
       await userStore
-          .addTitleToMyList(movie); // Adiciona o objeto MovieModel completo
+          .addTitleToMyList(movie);
     }
 
     Future<void> removeFromMyList() async {
@@ -70,7 +70,7 @@ class MovieDetailsScreen extends StatelessWidget {
                     ),
                     Center(
                       child: Image.network(
-                        'https://image.tmdb.org/t/p/w500/${movie.posterPath}', // Assuming you have a posterPath field
+                        'https://image.tmdb.org/t/p/w500/${movie.posterPath}',
                       ),
                     ),
                     Padding(
@@ -99,17 +99,13 @@ class MovieDetailsScreen extends StatelessWidget {
                       ),
                       child: SizedBox(
                         height: 50,
-                        width: 1000, // Defina a altura desejada
+                        width: 1000,
                         child: MovieGenreList(
                           genreIds: movie.genreIds
                               .map((id) => id)
-                              .toList(), // Convert genre IDs to strings
+                              .toList(),
                         ),
                       ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 20, left: 20, right: 20),
-                      child: AvaliationComponent(),
                     ),
                   ],
                 ),

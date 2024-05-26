@@ -93,19 +93,16 @@ class PhoneNumberFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
-    const maxLength = 11; // Defina o comprimento máximo do número de telefone
+    const maxLength = 11;
 
-    // Remove todos os caracteres não numéricos do novo texto
     final digitsOnly = newValue.text.replaceAll(RegExp(r'\D'), '');
 
-    // Se o número de dígitos for menor que o máximo, mantenha o texto inalterado
     if (digitsOnly.length < maxLength) {
       return newValue;
     }
 
     final formattedNumber = StringBuffer();
 
-    // Aplica o padrão de formatação específico
     formattedNumber.write('(');
     formattedNumber.write(digitsOnly.substring(0, 2));
     formattedNumber.write(') ');

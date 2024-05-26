@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class OptionBtnComponent extends StatelessWidget {
   final VoidCallback onTap;
-  final String backgroundImageAsset; // Caminho do arquivo de imagem de fundo nos ativos
+  final String backgroundImageAsset;
 
   const OptionBtnComponent({
     super.key,

@@ -24,7 +24,7 @@ class TextWithTitleComponent extends StatelessWidget {
         ),
         const SizedBox(height: 8.0),
         Container(
-          height: 15.0, // Adjust the height as necessary
+          height: 15.0,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: texts.length,

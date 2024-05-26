@@ -25,8 +25,8 @@ class UserStore with ChangeNotifier {
     try {
       final result = await repository.signInUser(loginModel);
       state.value = result;
-      await authService.login(result.token); // Salva o token ao fazer login
-      await _saveUserToLocal(result); // Salva os dados do usuário localmente
+      await authService.login(result.token);
+      await _saveUserToLocal(result);
       notifyListeners();
     } on NotFoundException catch (e) {
       _setError(e.message);
@@ -59,8 +59,8 @@ class UserStore with ChangeNotifier {
 
     try {
       state.value = null;
-      await authService.logout(); // Limpa o token ao fazer logout
-      await _clearLocalUserData(); // Limpa os dados do usuário localmente
+      await authService.logout();
+      await _clearLocalUserData();
       notifyListeners();
     } catch (e) {
       _setError(e.toString());
@@ -82,7 +82,7 @@ class UserStore with ChangeNotifier {
 
     isLoading.value = true;
     try {
-      final email = state.value!.email; // Usar email em vez de userId
+      final email = state.value!.email;
       final token = authService.token!;
       await repository.addTitleToUserList(email, movie.title, token);
 
@@ -104,7 +104,7 @@ class UserStore with ChangeNotifier {
 
     isLoading.value = true;
     try {
-      final email = state.value!.email; // Usar email em vez de userId
+      final email = state.value!.email;
       final token = authService.token!;
       await repository.removeTitleToUserList(email, movie.title, token);
 

@@ -27,11 +27,27 @@ class _SignInScreenState extends State<SignInScreen> with ValidationsMixin {
   Widget build(BuildContext context) {
     final userStore = Provider.of<UserStore>(context);
 
-    void loginUser() {
+    void loginUser() async {
       if (_formKey.currentState!.validate()) {
         LoginModel loginModel = LoginModel(
-            email: _emailController.text, password: _passwordController.text);
-        userStore.signInUser(loginModel);
+          email: _emailController.text,
+          password: _passwordController.text,
+        );
+
+        try {
+          await userStore.signInUser(loginModel);
+          if (userStore.error.value.isEmpty) {
+            GoRouter.of(context).push("/");
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(userStore.error.value)),
+            );
+          }
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Ocorreu um erro durante o login: $e')),
+          );
+        }
       }
     }
 

@@ -41,7 +41,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ValidationsMixin {
                 padding: EdgeInsets.all(25.0),
                 child: CircleAvatar(
                   radius: 70,
-                  backgroundImage: AssetImage('assets/images/profile.png'),
+                  backgroundImage: AssetImage('assets/images/profile.jpeg'),
                 ),
               ),
               Text(
